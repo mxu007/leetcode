@@ -33,7 +33,7 @@
 # matrix will have a number of rows and columns in range [1, 20].
 # matrix[i][j] will be integers in range [0, 99].
 
-# https://leetcode.com/problems/toeplitz-matrix/description/
+# https://leetcode.com/problems/toeplitz-matrix/description/[]
 
 class Solution:
     def isToeplitzMatrix(self, matrix):
