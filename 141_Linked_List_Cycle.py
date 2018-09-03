@@ -32,6 +32,7 @@ class Solution(object):
         slow_p = head
         fast_p = head
         while(slow_p and fast_p and fast_p.next):
+            # move pointer first then check if equals
             slow_p = slow_p.next
             fast_p = fast_p.next.next
             if slow_p == fast_p:

@@ -49,7 +49,7 @@ class Solution:
                 Flag = (A[i] > A[i-1])
             if Flag:
                 temp = (A[i] >= A[i-1])
-                if temp != Flag and Flag: return False
+                if temp != Flag: return False
             elif Flag != None:
                 temp = (A[i] > A[i-1])
                 if temp != Flag: return False
@@ -59,7 +59,7 @@ class Solution:
 class Solution:
     def isMonotonic(self, A):
         """
-        :type A: List[int]
+        :type A:
         :rtype: bool
         """
         return sorted(A) == A or sorted(A) == A[::-1]

@@ -64,7 +64,67 @@ class Solution(object):
                 result.append(startIndex)
             headLetter = s[startIndex]
             sDic[headLetter] -= 1
-            # remove from Counter if count reaches 0, unnecessary
+            # remove from Counter if count reaches 0, because index is appended if pDic == sDic
             if sDic[headLetter] == 0:
                 del sDic[headLetter]
-        return result
+        return resultclass Solution:
+    def containsNearbyDuplicate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        index_dict = {}
+        for i, num in enumerate(nums):
+            # need to check whether num in dictionary for python 3
+            if num in index_dict:
+                if i - index_dict.get(num) <= k:
+                    return True
+            index_dict[num] = i
+
+        return Falseclass Solution:
+    def containsNearbyDuplicate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        index_dict = {}
+        for i, num in enumerate(nums):
+            # need to check whether num in dictionary for python 3
+            if num in index_dict:
+                if i - index_dict.get(num) <= k:
+                    return True
+            index_dict[num] = i
+
+        return Falseclass Solution:
+    def containsNearbyDuplicate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        index_dict = {}
+        for i, num in enumerate(nums):
+            # need to check whether num in dictionary for python 3
+            if num in index_dict:
+                if i - index_dict.get(num) <= k:
+                    return True
+            index_dict[num] = i
+
+        return Falseclass Solution:
+    def containsNearbyDuplicate(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: bool
+        """
+        index_dict = {}
+        for i, num in enumerate(nums):
+            # need to check whether num in dictionary for python 3
+            if num in index_dict:
+                if i - index_dict.get(num) <= k:
+                    return True
+            index_dict[num] = i
+
+        return False
