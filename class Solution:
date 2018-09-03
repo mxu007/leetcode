@@ -1,0 +1,27 @@
+class Solution:
+    def numMagicSquaresInside(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        # function to check 3x3 list of list whether is a magic grid
+        def check_magic(square):
+            # flatten the input nested list
+            flatten_square = [item for sublist in square for item in sublist]
+            # unique, all smaller than 10
+            if len(flatten_square) != len(set(flatten_square)) or sum(flatten_square)!=45 or any(item >=10 for item in flatten_square):
+                return False
+            # check row, column and diag sum
+            row = sum(square[0]) == sum(square[1]) == sum(square[2])
+            column = sum([row[0] for row in square]) == sum([row[1] for row in square]) == sum([row[2] for row in square])
+            diag = sum([square[0][0],square[1][1],square[2][2]]) == sum([square[0][2],square[1][1],square[2][0]])
+            return row and column and diag
+
+        count = 0
+        row_len = len(grid)
+        col_len = len(grid[0])
+        for i in range(0,row_len-3+1):
+            for j in range(0, col_len-3+1):
+                if check_magic([row[j:j+3] for row in grid[i:i+3]]): count += 1
+
+        return count
