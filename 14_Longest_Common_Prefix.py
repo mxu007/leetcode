@@ -167,3 +167,34 @@ class Solution:
 
         if not strs: return ""
         return find_longestCommonPrefix(strs, 0, len(strs)-1)
+
+# 10) Binary search on the length of prefix on the first word of the list, O(Slog(n)) time complexity where S is the number of characters in all strings.
+# The algorithm makes log(n) iterations due to binary search
+# O(1) constant extra space
+class Solution:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        def isCommonPrefix(strs, length):
+            # has to put 0 in the strs index
+            strl = strs[0][:length]
+            print(strl)
+            for i in range(1,len(strs)):
+                if not strs[i].startswith(strl):
+                    return False
+            return True
+         
+        if not strs: return ""
+        minLen = len(min(strs, key=len))
+        low, high = 1, minLen
+        # the binary search on the length of prefix on the first word
+        while(low<=high):
+            mid = (low+high) // 2
+            if (isCommonPrefix(strs, mid)):
+                low = mid + 1
+            else:
+                high = mid - 1
+        #print(low,high)
+        return strs[0][:high]
