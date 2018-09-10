@@ -40,7 +40,9 @@ class Solution:
     def longestCommonPrefix(self, strs):
         longest_pre = ""
         if not strs: return longest_pre
+
         shortest_str = min(strs, key=len)
+
         for i in range(len(shortest_str)):
             if all([x.startswith(shortest_str[:i+1]) for x in strs]):
                 longest_pre = shortest_str[:i+1]
@@ -56,12 +58,12 @@ class Solution:
         """
         if not strs:
             return ""
-        shortest = min(strs,key=len)
-        for i, ch in enumerate(shortest):
+        shortest_str = min(strs,key=len)
+        for i, ch in enumerate(shortest_str):
             for other in strs:
                 if other[i] != ch:
-                    return shortest[:i]
-        return shortest
+                    return shortest_str[:i]
+        return shortest_str
 
 # 4) use zip, set and length of set, if length of set greater than 1, return
 class Solution:
@@ -185,7 +187,7 @@ class Solution:
                 if not strs[i].startswith(strl):
                     return False
             return True
-         
+
         if not strs: return ""
         minLen = len(min(strs, key=len))
         low, high = 1, minLen
@@ -198,3 +200,31 @@ class Solution:
                 high = mid - 1
         #print(low,high)
         return strs[0][:high]
+
+# 11) os.path.commonprefix
+# https://docs.python.org/3/library/os.path.html
+class Solution:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        return os.path.commonprefix(strs)
+
+# 12) sort the arry and compare first and last words
+class Solution:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        longest_pre = []
+        if strs and len(strs) > 0:
+            strs = sorted(strs)
+            first, last = strs[0], strs[-1]
+            for i in range(len(first)):
+                if len(last) > i and last[i] == first[i]:
+                    longest_pre.append(last[i])
+                else:
+                    return "".join(longest_pre)
+        return "".join(longest_pre)
