@@ -88,8 +88,8 @@ class Solution:
         :type strs: List[str]; rtype: str
         """
         letter_groups, longest_pre = zip(*strs), ""
-        print(letter_groups, longest_pre)
-        # looping corrected based on @StefanPochmann's comment below
+        # print(letter_groups, longest_pre)
+        # [('f', 'f', 'f'), ('l', 'l', 'l'), ('o', 'o', 'i'), ('w', 'w', 'g')]
         for letter_group in letter_groups:
             if len(set(letter_group)) > 1: break
             longest_pre += letter_group[0]
@@ -106,10 +106,9 @@ class Solution:
             return ""
         min_s = min(strs)
         max_s = max(strs)
-        print(min_s, max_s)
         if not min_s:
             return ""
-        for (i,v) in enumerate(min_s):
+        for i in range(len(min_s)):
             if max_s[i] != min_s[i]:
                 return max_s[:i]
         return min_s[:]
