@@ -51,7 +51,8 @@ class Solution:
         return longest_pre
 
 # 3) variant of 1)
- def longestCommonPrefix(self, strs):
+class Solution:
+    def longestCommonPrefix(self, strs):
         """
         :type strs: List[str]
         :rtype: str
@@ -59,21 +60,22 @@ class Solution:
         if not strs:
             return ""
         shortest_str = min(strs,key=len)
-        for i, ch in enumerate(shortest_str):
+        for i, char in enumerate(shortest_str):
             for other in strs:
-                if other[i] != ch:
+                if other[i] != char:
                     return shortest_str[:i]
         return shortest_str
 
 # 4) use zip, set and length of set, if length of set greater than 1, return
 class Solution:
-    # @return a string
     def longestCommonPrefix(self, strs):
         if not strs:
             return ""
 
         for i, letter_group in enumerate(zip(*strs)):
-            #print(i,letter_group,set(letter_group))
+            # ["flower","flow","flight"]
+            # print(i,letter_group,set(letter_group))
+            # 0 ('f', 'f', 'f') {'f'}
             if len(set(letter_group)) > 1:
                 return strs[0][:i]
         else:
@@ -85,12 +87,13 @@ class Solution:
         """
         :type strs: List[str]; rtype: str
         """
-        sz, ret = zip(*strs), ""
+        letter_groups, longest_pre = zip(*strs), ""
+        print(letter_groups, longest_pre)
         # looping corrected based on @StefanPochmann's comment below
-        for c in sz:
-            if len(set(c)) > 1: break
-            ret += c[0]
-        return ret
+        for letter_group in letter_groups:
+            if len(set(letter_group)) > 1: break
+            longest_pre += letter_group[0]
+        return longest_pre
 
 
 # 6) use min max on list of strings
