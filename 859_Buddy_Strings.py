@@ -54,7 +54,7 @@ class Solution:
             # check if the swap can happen
             return A[indices[0]] == B[indices[1]] and A[indices[1]] == B[indices[0]]
             
-# 2) improved and more concise version of 1)
+# 2) improved and more concise version of #1)
 class Solution:
     def buddyStrings(self, A, B):
         """
@@ -70,3 +70,22 @@ class Solution:
         # B = "aaaaaaacb"
         # [('b', 'c'), ('c', 'b')] ('b', 'c') ('b', 'c')
         return len(dif) == 2 and dif[0] == dif[1][::-1]
+# 3) variant of #1)
+class Solution:
+    def buddyStrings(self, A, B):
+        """
+        :type A: str
+        :type B: str
+        :rtype: bool
+        """
+        if len(A) != len(B):
+            return False
+        if A == B:
+            return len(set(A)) < len(A)
+        else:
+            res = []
+            for i in range(len(A)):
+                if A[i] != B[i]:
+                    res.append([A[i],B[i]])
+            return len(res) == 2 and res[0][0] == res[1][1] and res[0][1] == res[1][0]
+ 
