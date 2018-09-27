@@ -28,8 +28,9 @@
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
-from math import ceil
 
+# 1) itearte one-time to get the length, O(N) time where N is the length of linked list
+from math import ceil
 class Solution:
     def middleNode(self, head):
         """
@@ -58,4 +59,38 @@ class Solution:
         # return the linked list
         return (head_copy)
 
+# 2) slow and fast pointers, slow moves one at a time, fast moves two at a time
+class Solution:
+    def middleNode(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        slow,fast = head, head
+        while fast.next and fast.next.next:
+            fast = fast.next.next
+            slow = slow.next
+
+        if fast.next:
+            slow = slow.next
+        return slow
+
+# 3) variant and more concise version of 2)
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+class Solution:
+    def middleNode(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        slow,fast = head, head
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+
+        return slow
 

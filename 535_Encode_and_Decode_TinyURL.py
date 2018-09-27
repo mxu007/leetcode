@@ -70,6 +70,7 @@ class Codec:
         :type longUrl: str
         :rtype: str
         """
+        # map the longUrl to the length of dictionary
         self.decodeDict[self.encodeDict[longUrl]] = longUrl
         return self.encodeDict[longUrl]
 

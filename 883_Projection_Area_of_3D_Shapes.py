@@ -18,7 +18,9 @@
 # Input: [[1,1,1],[1,0,1],[1,1,1]]
 # Output: 14
 
+# https://leetcode.com/problems/projection-area-of-3d-shapes/description/
 
+# 1) calculate top, front and side, O(MN) time complexity
 class Solution:
     def projectionArea(self, grid):
         """
@@ -41,3 +43,33 @@ class Solution:
 
         return (top+side_1+side_2)
 
+# 2) simplified version of 1)
+class Solution(object):
+    def projectionArea(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        #print([item > 0 for sublist in grid for item in grid])
+        top = sum([item > 0 for sublist in grid for item in sublist])
+        front = sum([max(sublist) for sublist in grid])
+        side = sum([max(sublist) for sublist in list(zip(*grid))])
+        return top+front+side
+
+# 3) one-liner of 2)
+class Solution(object):
+    def projectionArea(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        return sum([item > 0 for sublist in grid for item in sublist]) + sum([max(sublist) for sublist in grid]) + sum([max(sublist) for sublist in list(zip(*grid))])
+
+# 4) use map and zip, variant of 3)
+class Solution:
+    def projectionArea(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        return sum(item > 0 for sublist in grid for item in sublist) + sum(map(max, grid)) + sum(map(max, zip(*grid)))
