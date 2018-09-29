@@ -36,6 +36,10 @@
 # widths is an array of length 26.
 # widths[i] will be in the range of [2, 10].
 
+# https://leetcode.com/problems/number-of-lines-to-write-string/description/
+
+# 1) use dictionary, O(n) time to traverse the S, where n is no.of elements in S
+# O(1) space, constant space to create the dictionary mappings
 class Solution:
     def numberOfLines(self, widths, S):
         """
@@ -71,3 +75,40 @@ class Solution:
 
         return row_count, space_count
 
+# 2) more concise version of 1)
+import string
+class Solution:
+    def numberOfLines(self, widths, S):
+        """
+        :type widths: List[int]
+        :type S: str
+        :rtype: List[int]
+        """
+        width_dict = {letter:widths[i] for i,letter in enumerate(string.ascii_lowercase)}
+        # or widths_dict = dict(zip(string.ascii_lowercase, widths))
+        row_count, space_count = 1, 0
+        for s in S:
+            if (width_dict[s]+space_count > 100):
+                row_count += 1
+                space_count = width_dict[s]
+            else:
+                space_count += width_dict[s]
+
+        return [row_count, space_count]
+
+
+# 3) using ord() function and simplying the if logic
+import string
+class Solution:
+    def numberOfLines(self, widths, S):
+        """
+        :type widths: List[int]
+        :type S: str
+        :rtype: List[int]
+        """
+        row_count, space_count = 1, 0
+        for s in S:
+            width = widths[ord(s)-ord('a')]
+            row_count += 1 if space_count + width > 100 else 0
+            space_count = width if space_count + width > 100 else space_count + width
+        return [row_count,space_count]
