@@ -108,11 +108,11 @@ class Solution:
         :type val: int
         :rtype: TreeNode
         """
-        current, pre = root, None
-        while current:
-            print(current.val)
+        current, result = root, None
+        i = 0
+        while current is not None:
             if current.val == val:
-                return current
+                result = current
             if not current.left:
                 current = current.right
             else:
@@ -125,4 +125,4 @@ class Solution:
                 else:
                     pre.right = None
                     current = current.right
-        return None
+        return result if result else None
