@@ -104,4 +104,4 @@ class Solution:
             count, *domains = cpdomain.replace(" ",".").split(".")
             for i in range(len(domains)):
                 counter[".".join(domains[i:])] += int(count)
-        return [" ".join((str(v), k)) for k, v in counter.items()]
+        return [" ".join((str(val), key)) for key, val in counter.items()]
