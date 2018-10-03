@@ -23,7 +23,9 @@
 
 # https://leetcode.com/problems/subdomain-visit-count/description/
 
-
+# 1) use split() to split domains and subsequently sub-domains
+# use dictionary to store counts of sub-domain
+# O(MN) time where M is no.of website domains and N is the maximum length of subdomains for a specific domain
 class Solution:
     def subdomainVisits(self, cpdomains):
         """
@@ -57,3 +59,49 @@ class Solution:
             result.append(str(val)+" "+str(key))
 
         return (result)
+
+# 2) simplified and clean version of 1)
+class Solution:
+    def subdomainVisits(self, cpdomains):
+        """
+        :type cpdomains: List[str]
+        :rtype: List[str]
+        """
+        subdomain_counts = {}
+        for string in cpdomains:
+            count = int(string.split(" ")[0])
+            subdomains = string.split(" ")[1].split(".")
+
+            for i in range(0,len(subdomains)):
+                subdomain = ('.'.join(subdomains[i:]))
+                subdomain_counts[subdomain] = subdomain_counts.get(subdomain, 0) + count
+
+        return [str(val)+" "+str(key) for key, val in subdomain_counts.items()]
+
+# 3) use collections.Counter which is essentially just a dictionary
+class Solution:
+    def subdomainVisits(self, cpdomains):
+        """
+        :type cpdomains: List[str]
+        :rtype: List[str]
+        """
+
+        subdomain_counts = collections.Counter()
+        for string in cpdomains:
+            count, subdomains = string.split()
+            subdomain_counts[subdomains] += int(count)
+            for i in range(len(subdomains)):
+                if subdomains[i] == '.': subdomain_counts[subdomains[i + 1:]] += int(count)
+        return ["%d %s" % (subdomain_counts[key], key) for key in subdomain_counts]
+
+# 4) use *variable, *args in Python. It assigns non-keyword arguments with unknown length to iterable variable named after asteriks.
+# We use *args and **kwargs as an argument when we are unsure about the number of arguments to pass in the functions.
+class Solution:
+    def subdomainVisits(self, cpdomains):
+        counter = collections.Counter()
+        for cpdomain in cpdomains:
+            # returns list of subdomains to variable "domains"
+            count, *domains = cpdomain.replace(" ",".").split(".")
+            for i in range(len(domains)):
+                counter[".".join(domains[i:])] += int(count)
+        return [" ".join((str(v), k)) for k, v in counter.items()]
