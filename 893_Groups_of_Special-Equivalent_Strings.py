@@ -78,3 +78,22 @@ class Solution(object):
             d[(odd,even)] += 1
 
         return len(d)
+
+
+# 3) build a separate function to construct tuples of count
+class Solution(object):
+    def numSpecialEquivGroups(self, A):
+        """
+        :type A: List[str]
+        :rtype: int
+        """
+        def count(A):
+            ans = [0] * 52
+            for i, letter in enumerate(A):
+                # separate odd and even index char, hence the list has 52 places
+                # special-equivalent strings will generate same list as permutation between either odd or even indexed char
+                ans[ord(letter) - ord('a') + 26 * (i%2)] += 1
+            return tuple(ans)
+        # use of set {}, same tuple will be counted as 1 only
+        return len({count(word) for word in A})
+
