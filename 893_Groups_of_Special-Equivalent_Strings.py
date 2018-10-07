@@ -41,7 +41,9 @@
 # All A[i] consist of only lowercase letters.
 
 # https://leetcode.com/problems/groups-of-special-equivalent-strings/description/
-# 1) using set
+# 1) using set, O(M*Nlog(N)), where M is no.of elements in the input list and N is the length of string
+# NlogN is the sorted time complexity
+# the idea is "abcd" and "cdab" are the same group as cdab sorted by odd and even gives "abcd"
 class Solution(object):
     def numSpecialEquivGroups(self, A):
         """
@@ -80,7 +82,7 @@ class Solution(object):
         return len(d)
 
 
-# 3) build a separate function to construct tuples of count
+# 3) build a separate function "count" to update the count, tuple(ans) returns a tuple with character and no.of occurence mappings through a list with size 52 (26*2)
 class Solution(object):
     def numSpecialEquivGroups(self, A):
         """
@@ -92,8 +94,36 @@ class Solution(object):
             for i, letter in enumerate(A):
                 # separate odd and even index char, hence the list has 52 places
                 # special-equivalent strings will generate same list as permutation between either odd or even indexed char
+                # 26 * (i%2) to calculate index for even and odd
                 ans[ord(letter) - ord('a') + 26 * (i%2)] += 1
             return tuple(ans)
         # use of set {}, same tuple will be counted as 1 only
         return len({count(word) for word in A})
 
+
+# 4) one-liner, variant of 2)
+class Solution:
+    def numSpecialEquivGroups(self, A):
+        """
+        :type A: List[str]
+        :rtype: int
+        """
+        return len({tuple(sorted(word[0::2]) + sorted(word[1::2])) for word in A})
+
+
+# 5) using dictionary to store the key, return length of the dictionary
+class Solution:
+    def numSpecialEquivGroups(self, A):
+        """
+        :type A: List[str]
+        :rtype: int
+        """
+        d = dict()
+        for i in A:
+            if len(i) >= 2:
+                key = (tuple(sorted(i[::2])), tuple(sorted(i[1::2])))
+                d[key] = d.get(key,0) + 1
+            else:
+                d[i] = d.get(i,0) + 1
+
+        return len(d)
