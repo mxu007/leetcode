@@ -74,3 +74,71 @@ class Solution:
         for i in range(n - 1): res[i + 1] = min(res[i + 1], res[i] + 1)
         for i in range(n - 1)[::-1]: res[i] = min(res[i], res[i + 1] + 1)
         return res
+
+
+# 5) single-pass, for each letter, search to left and search to right
+# O(N^2) time due to the search at each index
+class Solution:
+    def shortestToChar(self, S, C):
+        result = [0] * len(S)
+        for i in range(len(S)):
+            if S[i] != C:
+                left_dist = S[:i+1][::-1].find(C)
+                right_dist = S[i:].find(C)
+                if left_dist > 0  and right_dist > 0 :
+                    result[i] = min(left_dist,right_dist)
+                else:
+                    result[i] = left_dist if left_dist > 0 else right_dist
+        return result
+
+# 6) variant of 5), more compact if else logic
+class Solution:
+    def shortestToChar(self, S, C):
+        result = [0] * len(S)
+        for i in range(len(S)):
+            if S[i] != C:
+                left_dist = S[:i+1][::-1].find(C)
+                right_dist = S[i:].find(C)
+                result[i] = min(left_dist,right_dist) if (left_dist*right_dist > 0) else left_dist if left_dist > 0 else right_dist
+        return result
+
+# 7) variant of 3), two pointers travel from either left to right or right to left
+class Solution:
+    def shortestToChar(self, S, C):
+        """
+        :type S: str
+        :type C: str
+        :rtype: List[int]
+        """
+        i, j = 0, len(S) - 1
+        left, right = None, None
+        result = [float('inf')] * len(S)
+        while i < len(S) and j >= 0:
+            if S[i] == C: right = i
+            if right != None: result[i] = min(result[i], i - right)
+            if S[j] == C: left = j
+            if left != None: result[j] = min(result[j], left - j)
+            i += 1; j -= 1
+        return result
+
+# 8) dynamic programming, O(N) but 3-passes, 1st pass to get target indices of C
+# 2nd pass move from left to right, 3rd pass move from right to left, similar to 3), 4), 7)
+class Solution:
+    def shortestToChar(self, S, C):
+        """
+        :type S: str
+        :type C: str
+        :rtype: List[int]
+        """
+        dp = [len(S)] * len(S)
+
+        for i, s in enumerate(S):
+            if s==C: dp[i] = 0
+
+        for i in range(1,len(S)):
+            dp[i] = min(dp[i], dp[i-1]+1)
+
+        for j in range(len(S)-2, -1, -1):
+            dp[j] = min(dp[j], dp[j+1]+1)
+
+        return dp
