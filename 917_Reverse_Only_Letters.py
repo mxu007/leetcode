@@ -33,7 +33,6 @@ class Solution:
         :type S: str
         :rtype: str
         """
-
         reversed_letters = [s for s in S if s in string.ascii_letters][::-1]
         i, S = 0, list(S)
         for j in range(len(S)):

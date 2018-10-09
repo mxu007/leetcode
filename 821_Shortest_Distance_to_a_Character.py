@@ -14,6 +14,7 @@
 
 # https://leetcode.com/problems/shortest-distance-to-a-character/description/
 
+# 1) two-pass approach, O(NM) time where N is no.of letters in string S and N is no.of times C occur in S
 class Solution:
     def shortestToChar(self, S, C):
         """
@@ -33,6 +34,8 @@ class Solution:
         # iterate the second time to find the minimum distance from each element of the string
         # to the target character
         for i in range(0,len(S)):
-            results.append(min( (abs(x-i) for x in target_pos)))
+            results.append(min((abs(x-i) for x in target_pos)))
 
         return results
+
+# 2) single-pass
