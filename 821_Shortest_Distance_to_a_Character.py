@@ -38,4 +38,39 @@ class Solution:
 
         return results
 
-# 2) single-pass
+# 2) simplified version of 1)
+class Solution:
+    def shortestToChar(self, S, C):
+        """
+        :type S: str
+        :type C: str
+        :rtype: List[int]
+        """
+        target_pos = [i for i, char in enumerate(S) if char == C]
+        return [min(abs(j-i) for i in target_pos) for j in range(len(S))]
+
+# 3) loop twice on string S: left to right and then back from right to left
+# O(N) time complexy
+# First forward pass to find shortest distance to target character on left.
+# Second backward pass to find shortest distance to target character on the right
+class Solution:
+    def shortestToChar(self, S, C):
+        n = len(S)
+        res = [n] * n
+        pos = -n
+        for i in list(range(n)) + list(range(n)[::-1]):
+            if(S[i] == C):  pos = i
+            res[i] = min(res[i], abs(i - pos))
+        return res
+
+
+# 4) variant of 3)
+# First forward pass to find shortest distance to target character on left.
+# Second backward pass to find shortest distance to target character on the right
+class Solution:
+    def shortestToChar(self, S, C):
+        n = len(S)
+        res = [0 if c == C else n for c in S]
+        for i in range(n - 1): res[i + 1] = min(res[i + 1], res[i] + 1)
+        for i in range(n - 1)[::-1]: res[i] = min(res[i], res[i + 1] + 1)
+        return res
