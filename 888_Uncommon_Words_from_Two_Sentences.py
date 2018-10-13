@@ -26,6 +26,7 @@
 
 # https://leetcode.com/problems/uncommon-words-from-two-sentences/description/
 
+# 1) O(N) time to build the counter dictionary
 class Solution:
     def uncommonFromSentences(self, A, B):
         """
@@ -49,5 +50,31 @@ class Solution:
 
         # return the key if it has only value 1, appears exxactly once in one of the sentences,
         # and does not appear in the other sentence
-        return (list(key for key, val in word_count.items() if val == 1))
+        return list(key for key, val in word_count.items() if val == 1)
+
+# 2) use collections.Counter() and set operations, O(N)
+from collections import Counter
+class Solution:
+    def uncommonFromSentences(self, A, B):
+        """
+        :type A: str
+        :type B: str
+        :rtype: List[str]
+        """
+
+        cnt_A = Counter(A.split())
+        cnt_B = Counter(B.split())
+        return [item for item in list(set(A.split()) ^ set(B.split())) if cnt_A[item] <= 1 and cnt_B[item] <= 1]
+
+
+# 3) one-liner of 2), but less efficient due to recomputation of Counter dictionary
+from collections import Counter
+class Solution:
+    def uncommonFromSentences(self, A, B):
+        """
+        :type A: str
+        :type B: str
+        :rtype: List[str]
+        """
+        return [item for item in list(set(A.split()) ^ set(B.split())) if Counter(A.split())[item] <= 1 and Counter(B.split())[item] <= 1]
 
