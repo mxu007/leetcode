@@ -20,8 +20,23 @@
 -- |   1     | War       |   great 3D   |   8.9     |
 -- +---------+-----------+--------------+-----------+
 
+# https://leetcode.com/problems/not-boring-movies/
 
-# Write your MySQL query statement belows
+# 1) use % operator
 SELECT * FROM cinema
 WHERE id % 2 = 1 AND description != 'boring'
+ORDER BY rating DESC
+
+# 2) use mod operator
+SELECT * FROM cinema
+# % - The percent sign represents zero, one, or multiple characters
+WHERE mod(id,2)=1 AND description not like '%boring%'
+ORDER BY rating DESC
+
+# 3) use substring
+SELECT * FROM cinema WHERE substring(id,1) in (1,3,5,7,9) and description != 'boring' order by rating DESC
+
+# 4) use "&" bit-wise and operator
+SELECT * FROM cinema
+WHERE id & 1 = 1 AND description != 'boring'
 ORDER BY rating DESC
