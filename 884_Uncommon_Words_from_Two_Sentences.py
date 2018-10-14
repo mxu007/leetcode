@@ -78,3 +78,41 @@ class Solution:
         """
         return [item for item in list(set(A.split()) ^ set(B.split())) if Counter(A.split())[item] <= 1 and Counter(B.split())[item] <= 1]
 
+# 4) concatenate string A and B then find word that occur only once
+from collections import Counter
+class Solution:
+    def uncommonFromSentences(self, A, B):
+        """
+        :type A: str
+        :type B: str
+        :rtype: List[str]
+        """
+        count = Counter((A + " " + B).split())
+        return [word for word in count if count[word]==1]
+
+# 5) one-liner of 4)
+from collections import Counter
+class Solution:
+    def uncommonFromSentences(self, A, B):
+        return [word for word, count in Counter((A + " " + B).split()).items() if count == 1]
+
+
+# 6) use two counters and find occurence of only once and not in another counter
+from collections import Counter
+class Solution:
+    def uncommonFromSentences(self, A, B):
+        ca, cb = Counter(A.split(" ")), collections.Counter(B.split(" "))
+        return [w for w in ca if w not in cb and ca[w] == 1] + [w for w in cb if w not in ca and cb[w] == 1]
+
+# 7) variant of 5
+from collections import Counter
+class Solution:
+    def uncommonFromSentences(self, A, B):
+        return [word for word, count in Counter(A.split() + B.split()).items() if count == 1]
+
+# 8) use lambda function
+from collections import Counter
+class Solution:
+    def uncommonFromSentences(self, A, B):
+        return (lambda x: [word for word in x if x[word] == 1])(Counter((A + ' ' + B).split()))
+
