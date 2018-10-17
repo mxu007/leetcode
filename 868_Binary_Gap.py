@@ -36,7 +36,9 @@
 
 # https://leetcode.com/problems/binary-gap/description/
 
-
+# 1) create a list to store position of binary 1
+# then iterate through the list to find the pair-wise distance and find the max distance
+# O(N) time and O(N) space where N is no.of binary positions
 class Solution:
     def binaryGap(self, N):
         """
@@ -64,4 +66,5 @@ class Solution:
             print(target_pos)
             print([x - target_pos[j-1] for j,x in enumerate(target_pos)][1:])
             # iterate the target_pos and calculate consecutive difference, find the max value
-            return (max([x - target_pos[j-1] for j,x in enumerate(target_pos)][1:]) )
+            return max([x - target_pos[j-1] for j,x in enumerate(target_pos)][1:])
+
