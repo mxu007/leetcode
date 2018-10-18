@@ -68,3 +68,78 @@ class Solution:
             # iterate the target_pos and calculate consecutive difference, find the max value
             return max([x - target_pos[j-1] for j,x in enumerate(target_pos)][1:])
 
+
+# 2) 2-liner of 1)
+class Solution:
+    def binaryGap(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        target_pos = [i for i, char in enumerate(format(N, "b")) if char == '1']
+        return max([x - target_pos[j-1] for j,x in enumerate(target_pos)][1:]) if len(target_pos) > 1 else 0
+
+# 3) variant using zip
+class Solution:
+    def binaryGap(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        target_pos = [i for i, char in enumerate(format(N, "b")) if char == '1']
+        return max([nex - pre for pre, nex in zip(target_pos, target_pos[1:])] or [0])
+
+# 4) O(1) space and O(N) time, just iterate the binary string
+# i to store index of previous 1, dist to store current matrix distance
+class Solution:
+    def binaryGap(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        pre = dist = 0
+        for i, char in enumerate(bin(N)[2:]):
+            if char == "1":
+                dist = max(dist, i - pre)
+                pre = i
+        return dist
+
+# 5) a flag to control the counter update
+# iterate from left to right to find consecutive 1s. dist stores the current largest distance, variant of 4), also O(1) space
+class Solution:
+    def binaryGap(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        dist = 0
+        counting = False
+        counter = 0
+        binary = bin(N)[2:]
+
+        for index in range(0, len(binary)):
+
+            if (binary[index] == '1') and (counting == False):
+                counting = True
+
+            elif (binary[index] != '1') and (counting == True):
+                counter += 1
+
+            elif (binary[index] == '1') and (counting == True):
+                counter += 1
+                if counter > dist:
+                    dist = counter
+                counter = 0
+
+        return dist
+
+# 6) strip('0') removes trailing and leading zeros, split('1') removes all 1 and separate the string into list of elements, then iterate and check length of each element
+# N & N-1 removes 2^n, e.g. 8 (1000) & 7(0111) --> 0
+class Solution:
+    def binaryGap(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        return max(len(char) for char in bin(N)[2:].strip('0').split('1')) + 1 if N & (N-1) else 0
+
