@@ -143,3 +143,46 @@ class Solution:
         """
         return max(len(char) for char in bin(N)[2:].strip('0').split('1')) + 1 if N & (N-1) else 0
 
+# 7) nested for loop, first locate '1', then serach from the RHS of the found 1 to update current maximum length
+class Solution:
+    def binaryGap(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        s = bin(N)[2:]
+        result = 0
+
+        for i in range(len(s)):
+            if s[i] == "1":
+                for j in range(i+1, len(s)):
+                    if s[j] == "1":
+                        result = max(result, j - i)
+                        break
+        return result
+
+# 8) binary shift right 1 to check the bit of N, use variable flag to control the counting, variant of 5)
+class Solution:
+    def binaryGap(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        maxdist = 0
+        i = 1
+        dist = 0
+        flag = False
+
+        while i < N:
+            b = (N & i)
+            # print b, maxdist
+            if b == 0:
+                if flag:
+                    dist += 1
+            else:
+                flag = True
+                if dist > maxdist:
+                    maxdist = dist
+                dist = 1
+            i = i<<1
+        return maxdist
