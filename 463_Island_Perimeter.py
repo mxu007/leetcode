@@ -38,3 +38,13 @@ class Solution:
                     #print((i,j),offset,perimeter)
         return perimeter
 
+# 2)  ne(a, b) is equivalent to a != b
+# just count the differing pairs, both horizontally and vertically (for the latter I simply transpose the grid).
+class Solution:
+    def islandPerimeter(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        return sum(sum(map(operator.ne, [0] + row, row + [0]))
+               for row in grid + list(map(list, zip(*grid))))
