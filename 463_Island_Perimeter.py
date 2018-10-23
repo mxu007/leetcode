@@ -48,3 +48,20 @@ class Solution:
         """
         return sum(sum(map(operator.ne, [0] + row, row + [0]))
                for row in grid + list(map(list, zip(*grid))))
+
+# 3)
+class Solution:
+    def islandPerimeter(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+        m, n = len(grid), len(grid[0]) if grid else 0
+        return sum([(r - 1 < 0  or grid[r-1][c] == 0) +\
+                    (c - 1 < 0  or grid[r][c-1] == 0) +\
+                    (r + 1 >= m or grid[r+1][c] == 0) +\
+                    (c + 1 >= n or grid[r][c+1] == 0)
+                    for r in range(m)
+                    for c in range(n)
+                    if grid[r][c] == 1]
+                    )
