@@ -65,3 +65,23 @@ class Solution:
                     for c in range(n)
                     if grid[r][c] == 1]
                     )
+
+# 4)
+class Solution:
+    def islandPerimeter(self, grid):
+        """
+        :type grid: List[List[int]]
+        :rtype: int
+        """
+
+        s, m = len(grid), len(grid[0])
+        ans = 0
+        for x in range(s):
+            for y in range(m):
+                if grid[x][y] == 1:
+                    ans += 4
+                    if x < s - 1 and grid[x+1][y] == 1:
+                        ans -= 2
+                    if y < m - 1 and grid[x][y+1] == 1:
+                        ans -= 2
+        return ans
